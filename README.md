@@ -34,7 +34,7 @@ Docker
 
 Streamlit
 
-## Challenges
+## Features
 
 ### Implemented 3 DAGs for common features
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
