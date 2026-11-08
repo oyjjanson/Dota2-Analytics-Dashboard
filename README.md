@@ -67,7 +67,7 @@ Get requests to the OpenDota API fails on occasion, while get request code stays
 
 I have programmed a recursion function that has 2 main features that reduces its overall impact:
   1. Recursion function that retries if get request fails (automatically retries with same code as issue is likely API based)
-  2. Able to start loading from last collected batch of data ("save point" introduced, decreases loading times)
+  2. Able to start loading from last collected batch of data ("save point" introduced, able to continue where for loop left off on error)
 
 
 
