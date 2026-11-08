@@ -36,10 +36,10 @@ Streamlit
 
 ## Features
 
-### Processed ~3 million match records
+### Feature #1: Processed ~3 million match records
 Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for database storage to take as little space as possible while providing enough data for analysis.
 
-### Implemented 3 DAGs for common uses
+### Feature #2: Implemented 3 DAGs for common uses
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
 
 1. DAG: clear_database
@@ -63,7 +63,7 @@ This DAG should be followed after clear_database, contains 2 pythonOperators:
   1. Gets a list of UNIX timestamps of 4 Sundays back, returns the last Sunday and writes it into the config file.
   2. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
-### Retries on failure get request failure
+### Feature #3: Retries on failure get request failure
 <img width="479" height="560" alt="Retry get request" src="https://github.com/user-attachments/assets/6dfd59f6-dd27-45ac-90b4-06ad97df9b11" />
 
 Get requests to the OpenDota API fails on occasion, while get request code stays consistent. 
