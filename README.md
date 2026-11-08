@@ -63,7 +63,7 @@ This DAG should be followed after clear_database, contains 2 pythonOperators:
   1. Gets a list of UNIX timestamps of 4 Sundays back, returns the last Sunday and writes it into the config file.
   2. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
-### Feature #3: Retries on failure get request failure
+### Feature #3: Retries on get request failure
 <img width="479" height="560" alt="Retry get request" src="https://github.com/user-attachments/assets/6dfd59f6-dd27-45ac-90b4-06ad97df9b11" />
 
 Get requests to the OpenDota API fails on occasion, while get request code stays consistent. 
