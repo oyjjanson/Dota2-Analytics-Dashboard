@@ -36,6 +36,9 @@ Streamlit
 
 ## Features
 
+### Processed ~3 million match records
+Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for database storage to take as little space as possible while providing enough data for analysis.
+
 ### Implemented 3 DAGs for common uses
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
 
