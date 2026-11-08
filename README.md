@@ -23,7 +23,7 @@ Accommodates different weeks in drop down bar on right.
 ## System Architecture Diagram
 <img width="2008" height="2130" alt="System Architecure" src="https://github.com/user-attachments/assets/b5b4e7f9-0cdb-4a5f-985c-937176251975" />
 
-## Technologies Used
+## Technology Used
 Python/Pandas
 
 PostgreSQL/Neon
