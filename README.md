@@ -21,7 +21,7 @@ Second tab on navigation bar.
 Accommodates different weeks in drop down bar on right.
 
 ## System Architecture Diagram
-<img width="2008" height="2130" alt="System Architecure" src="https://github.com/user-attachments/assets/b5b4e7f9-0cdb-4a5f-985c-937176251975" />
+<img width="437" height="494" alt="System Architecure2" src="https://github.com/user-attachments/assets/1da5cfac-f03e-47bd-bf70-c12315008b75" />
 
 ## Technology Used
 Python/Pandas
