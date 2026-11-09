@@ -42,16 +42,16 @@ Streamlit
 ### Feature #1: Able to process ~3 million match records weekly
 <img width="1915" height="916" alt="database_neon" src="https://github.com/user-attachments/assets/11e689b8-3656-4fe1-9f65-41f41380e2cc" />
 
-Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for storage, from storing ~3million matches, to 127 (no. of heroes) rows of data per week and is able to accommodate extra features easily without having to increase storage space by an astronomical amount.
+Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for storage, from storing ~3million matches, to 127 (no. of heroes) rows of data per week and is able to accommodate extra features easily without having to increase storage space by a significant amount.
 
 ### Feature #2: Implemented 3 DAGs for common uses
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
   
-  DAG#1: clear_database
+  DAG#1: clear_database (Truncates table and preserves role permissions)
   
-This DAG is mostly ran manually to clear out my entire PostgreSQL database. This DAG runs a truncate on the existing table as to prevent the reset of permissions on my readonly and writeonly roles, while giving me a blank table so insert data into.
+This DAG is primarily executed manually to truncate my target PostgreSQL table. This DAG runs a truncate on the existing table as to prevent the reset of permissions on my readonly and writeonly roles, while giving me a blank table so insert data into.
 
-  DAG#2: main
+  DAG#2: main (Main way of populating database)
   
 <img width="580" height="159" alt="DAG_main" src="https://github.com/user-attachments/assets/0979477d-7bae-4f53-b9c0-616190196614" />
 
@@ -60,7 +60,7 @@ This DAG directs the main body of code consisting of 3 pythonOperators:
   2. Checks database for latest timestamp and changes config file to ready next ETL
   3. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
-  DAG#3: start_4_mon
+  DAG#3: start_4_mon (Initialise/Backfill)
   
 <img width="582" height="148" alt="DAG_start_4_mon" src="https://github.com/user-attachments/assets/fed2fc38-eb8c-4d18-905e-c4ca3062d819" />
 
@@ -68,13 +68,13 @@ This DAG should be followed after clear_database, contains 2 pythonOperators:
   1. Gets a list of UNIX timestamps of 4 Sundays back, returns the last Sunday and writes it into the config file.
   2. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
-### Feature #3: Retries on get request failure
+### Feature #3: Retries on HTTP request failure
 <img width="479" height="560" alt="Retry get request" src="https://github.com/user-attachments/assets/6dfd59f6-dd27-45ac-90b4-06ad97df9b11" />
 
 Get requests to the OpenDota API fails on occasion, while get request code stays consistent. 
 
 I have programmed a recursion function that has 2 main features that reduces its overall impact:
-  1. Recursion function that retries if get request fails (automatically retries with same code as issue is likely API based)
+  1. Recursion function that retries if HTTP request fails (automatically retries with same code as issue is likely API based)
   2. Able to start loading from last collected batch of data ("save point" introduced, able to continue where for loop left off on error)
 
 
