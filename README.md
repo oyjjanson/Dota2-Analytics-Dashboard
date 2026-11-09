@@ -41,13 +41,12 @@ Streamlit
 Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for database storage to take as little space as possible while providing enough data for analysis.
 
 ### Feature #2: Implemented 3 DAGs for common uses
-
-1. DAG: clear_database
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
-
+  
+  DAG#1 clear_database
 This DAG is mostly ran manually to clear out my entire PostgreSQL database. This DAG runs a truncate on the existing table as to prevent the reset of permissions on my readonly and writeonly roles, while giving me a blank table so insert data into.
 
-2. Dag: main
+  DAG#2 main
 <img width="580" height="159" alt="DAG_main" src="https://github.com/user-attachments/assets/0979477d-7bae-4f53-b9c0-616190196614" />
 
 This DAG directs the main body of code consisting of 3 pythonOperators:
@@ -55,7 +54,7 @@ This DAG directs the main body of code consisting of 3 pythonOperators:
   2. Checks database for latest timestamp and changes config file to ready next ETL
   3. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
-3. DAG: start_4_mon
+  DAG#3 start_4_mon
 <img width="582" height="148" alt="DAG_start_4_mon" src="https://github.com/user-attachments/assets/fed2fc38-eb8c-4d18-905e-c4ca3062d819" />
 
 This DAG should be followed after clear_database, contains 2 pythonOperators:
