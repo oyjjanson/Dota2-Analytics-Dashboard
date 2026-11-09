@@ -11,9 +11,10 @@ This project requests data from the OpenDota API, cleans, validates and loads it
 Dashboard is created using streamlit and hosted onto streamlit cloud.
 
 End result of such a site is contained within this repository which shows heroes statistics in a table and a cluster diagram.
-
+1. Hero Statistics
 <img width="1879" height="840" alt="dashboard-statistics" src="https://github.com/user-attachments/assets/80585d48-166b-4a87-8ada-00ab1a107649" />
-First tab on navigation bar.
+Hero statistics tab shows the statistics for all heroes in Dota2 based on the current/selected week that can be changed using the drop-down box on the right.
+Statistics provided are such as: Appearance rate, Win rate and Winrate Rankings.
 
 <img width="1898" height="819" alt="dashboard-cluster" src="https://github.com/user-attachments/assets/5cfe158c-d16d-41b7-84dd-664ae46fb362" />
 Second tab on navigation bar.
