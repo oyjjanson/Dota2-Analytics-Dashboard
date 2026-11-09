@@ -42,7 +42,7 @@ Streamlit
 
 ## Features
 
-### Feature #1: Able to process ~3 million match records weekly
+### Feature #1: Condensed ~3 million match data to 127 entries
 
 <img width="1915" height="916" alt="database_neon" src="https://github.com/user-attachments/assets/11e689b8-3656-4fe1-9f65-41f41380e2cc" />
 
