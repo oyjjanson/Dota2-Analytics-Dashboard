@@ -47,6 +47,7 @@ Able to obtain ~3 million match records using Python and Pandas to obtain statis
 This DAG is mostly ran manually to clear out my entire PostgreSQL database. This DAG runs a truncate on the existing table as to prevent the reset of permissions on my readonly and writeonly roles, while giving me a blank table so insert data into.
 
   DAG#2 main
+  
 <img width="580" height="159" alt="DAG_main" src="https://github.com/user-attachments/assets/0979477d-7bae-4f53-b9c0-616190196614" />
 
 This DAG directs the main body of code consisting of 3 pythonOperators:
@@ -55,6 +56,7 @@ This DAG directs the main body of code consisting of 3 pythonOperators:
   3. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
   DAG#3 start_4_mon
+  
 <img width="582" height="148" alt="DAG_start_4_mon" src="https://github.com/user-attachments/assets/fed2fc38-eb8c-4d18-905e-c4ca3062d819" />
 
 This DAG should be followed after clear_database, contains 2 pythonOperators:
