@@ -78,7 +78,7 @@ This DAG should be followed after clear_database, contains 2 pythonOperators:
 
 <img width="479" height="560" alt="Retry get request" src="https://github.com/user-attachments/assets/6dfd59f6-dd27-45ac-90b4-06ad97df9b11" />
 
-Get requests to the OpenDota API fails on occasion, while get request code stays consistent. 
+HTTP requests to the OpenDota API fail on occasion, while HTTP request code stays consistent. 
 
 I have programmed a recursion function that has 2 main features that reduces its overall impact:
   1. Recursion function that retries if HTTP request fails (automatically retries with same code as issue is likely API based)
