@@ -44,6 +44,7 @@ Able to obtain ~3 million match records using Python and Pandas to obtain statis
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
   
   DAG#1 clear_database
+  
 This DAG is mostly ran manually to clear out my entire PostgreSQL database. This DAG runs a truncate on the existing table as to prevent the reset of permissions on my readonly and writeonly roles, while giving me a blank table so insert data into.
 
   DAG#2 main
