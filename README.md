@@ -37,7 +37,7 @@ Streamlit
 
 ## Features
 
-### Feature #1: Processed ~3 million match records
+### Feature #1: Able to process ~3 million match records weekly
 Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for database storage to take as little space as possible while providing enough data for analysis.
 
 ### Feature #2: Implemented 3 DAGs for common uses
