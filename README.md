@@ -12,18 +12,21 @@ Dashboard is created using streamlit and hosted onto streamlit cloud.
 
 End result of such a site is contained within this repository which shows heroes statistics in a table and a cluster diagram.
 ### 1. Hero Statistics
+
 <img width="1879" height="840" alt="dashboard-statistics" src="https://github.com/user-attachments/assets/80585d48-166b-4a87-8ada-00ab1a107649" />
 
 Hero statistics tab shows the statistics for all heroes in Dota2 based on the current/selected week that can be changed using the drop-down box on the right.
 Statistics provided are such as: Appearance rate, Win rate and Winrate Rankings.
 
 ### 2. Cluster Diagram
+
 <img width="1898" height="819" alt="dashboard-cluster" src="https://github.com/user-attachments/assets/6c93064c-ddad-4457-9216-36677e3b5b08" />
 
 Cluster diagram tab shows how statistics can be presented with 2 dimensions of information readily available.
 Heroes' statistics are displayed with win/appearance rates presented relative to each other at a single glance. Outliers become evident and can be investigated by hovering over them to reveal more details about them.
 
 ## System Architecture Diagram
+
 <img width="554" height="646" alt="System Architecure4" src="https://github.com/user-attachments/assets/256dd38c-4ad7-431e-a506-46381052fc9a" />
 
 ## Technology Used
@@ -40,11 +43,13 @@ Streamlit
 ## Features
 
 ### Feature #1: Able to process ~3 million match records weekly
+
 <img width="1915" height="916" alt="database_neon" src="https://github.com/user-attachments/assets/11e689b8-3656-4fe1-9f65-41f41380e2cc" />
 
 Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for storage, from storing ~3million matches, to 127 (no. of heroes) rows of data per week and is able to accommodate extra features easily without having to increase storage space by a significant amount.
 
 ### Feature #2: Implemented 3 DAGs for common uses
+
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
   
   DAG#1: clear_database (Truncates table and preserves role permissions)
@@ -69,6 +74,7 @@ This DAG should be followed after clear_database, contains 2 pythonOperators:
   2. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
 ### Feature #3: Retries on HTTP request failure
+
 <img width="479" height="560" alt="Retry get request" src="https://github.com/user-attachments/assets/6dfd59f6-dd27-45ac-90b4-06ad97df9b11" />
 
 Get requests to the OpenDota API fails on occasion, while get request code stays consistent. 
