@@ -17,7 +17,7 @@ Hero statistics tab shows the statistics for all heroes in Dota2 based on the cu
 Statistics provided are such as: Appearance rate, Win rate and Winrate Rankings.
 
 ### 2. Cluster Diagram
-<img width="1898" height="819" alt="dashboard-cluster" src="https://github.com/user-attachments/assets/5cfe158c-d16d-41b7-84dd-664ae46fb362" />
+<img width="1879" height="840" alt="dashboard-statistics" src="https://github.com/user-attachments/assets/7c773cb8-57a0-4fd7-83b9-42a3e02ec4e1" />
 Cluster diagram tab shows how statistics can be presented with 2 dimensions of information readily available.
 Heroes' statistics are displayed with win/appearance rates presented relative to each other at a single glance. Outliers become evident and can be investigated by hovering over them to reveal more details about them.
 
