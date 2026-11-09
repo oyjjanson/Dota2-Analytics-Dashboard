@@ -46,7 +46,8 @@ Streamlit
 
 <img width="1915" height="916" alt="database_neon" src="https://github.com/user-attachments/assets/11e689b8-3656-4fe1-9f65-41f41380e2cc" />
 
-Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for storage, from storing ~3million matches, to 127 (no. of heroes) rows of data per week and is able to accommodate extra features easily without having to increase storage space by a significant amount.
+This project aims to pull ~3 million match data weekly and storing the entire thing is infeasible due to cloud storage constraints.
+Reformatted data for storage, from storing ~3million matches, to 127 (no. of heroes) rows of data per week and is able to accommodate extra features easily without having to significantly increase storage space.
 
 ### Feature #2: Implemented 3 DAGs for common uses
 
