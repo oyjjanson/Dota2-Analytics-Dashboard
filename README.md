@@ -42,9 +42,7 @@ Streamlit
 ### Feature #1: Able to process ~3 million match records weekly
 <img width="1915" height="916" alt="database_neon" src="https://github.com/user-attachments/assets/11e689b8-3656-4fe1-9f65-41f41380e2cc" />
 
-Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for database storage to take as little space as possible while providing enough data for analysis. Instead of storing ~3million matches, I have reduced the amount to 127 rows of data per week and is able to accommodate extra features easily without having to increase storage space by an astronomical amount.
-
-
+Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for database storage to take as little space as possible while providing enough data for analysis. Instead of storing ~3million matches, I have reduced the amount to 127 (no. of heroes) rows of data per week and is able to accommodate extra features easily without having to increase storage space by an astronomical amount.
 
 ### Feature #2: Implemented 3 DAGs for common uses
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
