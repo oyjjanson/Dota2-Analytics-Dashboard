@@ -24,7 +24,7 @@ Cluster diagram tab shows how statistics can be presented with 2 dimensions of i
 Heroes' statistics are displayed with win/appearance rates presented relative to each other at a single glance. Outliers become evident and can be investigated by hovering over them to reveal more details about them.
 
 ## System Architecture Diagram
-<img width="437" height="494" alt="System Architecure2" src="https://github.com/user-attachments/assets/1da5cfac-f03e-47bd-bf70-c12315008b75" />
+<img width="554" height="646" alt="System Architecure4" src="https://github.com/user-attachments/assets/256dd38c-4ad7-431e-a506-46381052fc9a" />
 
 ## Technology Used
 Python/Pandas
