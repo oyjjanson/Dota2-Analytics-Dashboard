@@ -12,23 +12,61 @@ from sqlalchemy import create_engine, text
 
 import streamlit as st
 
+#st.session_state.rank_tier = 
+
 df = pd.DataFrame()
 
-def filter_basic(weeks):
+# def filter_general(column_string,column_value,df):
+#     df_filtered = df[df[column_string] == column_value]
+#     return df_filtered
+
+def filter_general(column_string, column_value, df):
+    #If not column value is not a list
+    if not isinstance(column_value, list):
+        column_value = [column_value]
+
+    # List of column values if list
+    if column_string == "rank_tier":
+        column_value = [list_of_ranks.index(rank)+1 for rank in column_value]
+        if isinstance(column_value, list):
+            if len(column_value) > 1:
+                df = df.groupby("hero_id").agg({
+                "localized_name": "first",
+                "rank_tier": "first",
+                "appearances": "sum",
+                "wins": "sum",
+                "timestamp": "first"
+                }).reset_index()
+
+                total_matches = df["appearances"].sum()
+                df["appearance_rate"] = (df["appearances"] / total_matches * 100)
+
+                df["win_rate"] = (df["wins"] / df["appearances"] * 100)
+
+    #st.code(df)
+
+    df_filtered = df[df[column_string].isin(column_value)]
+
+    df_sorted = df_filtered.sort_values(by="win_rate", ascending=False)
+
+    return df_sorted
+
+def filter_UI(ranks,weeks):
     col1, col2 = st.columns(2)
 
-    #with col1:
-        # selection = st.segmented_control(
-        # "",
-        # options=[
-        #     "All",
-        #     "Rank1",
-        #     "Rank2"
-        # ],
-        # default="All",
-        # key="navigation",
-        # selection_mode="single"
-        # )
+    with col1:
+        st.session_state.rank_tier = st.segmented_control(
+        "",
+        options=ranks,
+        default="All",
+        key="navigation",
+        selection_mode="single"
+        )
+
+        if st.session_state.rank_tier is None:
+            st.session_state.rank_tier = list_of_ranks
+        if st.session_state.rank_tier == "All":
+            st.session_state.rank_tier = list_of_ranks
 
     with col2:
         st.session_state.timestamp = st.selectbox(
@@ -36,51 +74,66 @@ def filter_basic(weeks):
             weeks
         )
 
+def filter_main():
+    filter_UI(list_of_ranks,list_of_timestamps)
+    
+    df_filtered = filter_general("timestamp",st.session_state.timestamp,df)
+    df_filtered = filter_general("rank_tier",st.session_state.rank_tier,df_filtered)
+
+    st.code(st.session_state.rank_tier)
+
+    return df_filtered
+
 print(config.START_TIME_)
 
 # Load environment variables
 load_dotenv()
 
 # Retrieve Neon connection URL
-DATABASE_URL = os.getenv("DATABASE_READ_URL")
-#print(DATABASE_URL)
+@st.cache_data(ttl=600)
+def database_connection():
+    DATABASE_URL = os.getenv("DATABASE_READ_URL")
 
-if not DATABASE_URL:
-    raise ValueError("DATABASE_READ_URL not found in .env")
+    if not DATABASE_URL:
+        raise ValueError("DATABASE_READ_URL not found in .env")
 
-# Create database connection
-engine = create_engine(DATABASE_URL)
+    # Create database connection
+    engine = create_engine(DATABASE_URL)
 
-try:
-    # Read data from Neon
-    with engine.connect() as conn:
+    try:
+        # Read data from Neon
+        with engine.connect() as conn:
 
-        print("Connected user:",
-              conn.execute(text("SELECT current_user")).scalar())
+            print("Connected user:",
+                conn.execute(text("SELECT current_user")).scalar())
 
-        df = pd.read_sql(
-            text("SELECT * FROM hero_stats"),
-            conn
-        )
+            df = pd.read_sql(
+                text("SELECT * FROM hero_stats"),
+                conn
+            )
 
-        print("\nRetrieved data:")
-        print(df.head())
+            print("\nRetrieved data:")
+            #print(df.head())
 
-        print("\nNumber of rows retrieved:", len(df))
+            print("\nNumber of rows retrieved:", len(df))
 
-except Exception as e:
-    print("Database connection failed:", e)
+    except Exception as e:
+        print("Database connection failed:", e)
 
-finally:
-    engine.dispose()
+    finally:
+        engine.dispose()
+
+    return df
+
+df = database_connection()
 ################################ DATAFRAME
 
 #FIND UNIQUE WEEKS
-
 list_of_timestamps = df["timestamp"].unique().tolist()
 list_of_timestamps.sort(reverse=True)
 
-#st.code(list_of_timestamps)
+#List of ranks
+list_of_ranks = ["Herald","Guardian","Crusader","Archon","Legend","Ancient","Divine","All"]
 
 #STATS SUMMARY
 matches_analysed = int(df['appearances'].sum()/10)
@@ -91,7 +144,10 @@ highest_hero_wr = df.loc[max_idx_wr, "localized_name"]
 max_idx_appear = df["appearances"].idxmax()
 highest_hero_appear = df.loc[max_idx_appear, "localized_name"]
 
+
+
 ################################ START OF STREAMLIT CODE ####################
+
 st.set_page_config(
     page_title="Dota 2 Weekly",
     page_icon="🎮",
@@ -105,16 +161,12 @@ st.sidebar.write("Data Analytics Dashboard")
 st.sidebar.divider()
 
 #### NAVIGATION PANEL
-# pages = [
-#     "Hero Statistics",
-#     "Cluster Diagram",
-#     "Data Overview",
-#     "Pipeline Monitoring"
-# ]
-
 pages = [
+    "Trending Heroes",
     "Hero Statistics",
-    "Cluster Diagram"
+    "Cluster Diagram",
+    "Data Overview",
+    "Pipeline Monitoring"
 ]
 
 for page in pages:
@@ -122,14 +174,17 @@ for page in pages:
         st.session_state.page = page
 
 if "page" not in st.session_state:
-    st.session_state.page = "Hero Statistics"
+    st.session_state.page = "Trending Heroes"
 
 ##### Main page
 
 ################# HERO STATS
+if st.session_state.page == "Trending Heroes":
+    st.title("Trending Heroes")
+
 if st.session_state.page == "Hero Statistics":
     st.title("Hero Statistics")
-
+    
     col1, col2, col3 = st.columns(3)
 
     with col1:
@@ -145,9 +200,9 @@ if st.session_state.page == "Hero Statistics":
 
     st.subheader("Weekly Ranked Statistics")
 
-    filter_basic(list_of_timestamps)
+    df_filtered = filter_main()
 
-    df_filtered = df[df["timestamp"] == st.session_state.timestamp]
+    #df_filtered = df[df["timestamp"] == st.session_state.timestamp]
 
     st.dataframe(
         df_filtered.drop(columns=["hero_id","timestamp"]),
@@ -185,9 +240,7 @@ elif st.session_state.page == "Cluster Diagram":
 
     st.subheader("Weekly Ranked Cluster")
 
-    filter_basic(list_of_timestamps)
-
-    df_filtered = df[df["timestamp"] == st.session_state.timestamp]
+    df_filtered = filter_main()
 
     fig = px.scatter(
         df_filtered,
