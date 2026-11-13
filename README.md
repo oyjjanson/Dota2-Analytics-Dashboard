@@ -11,17 +11,23 @@ This project requests data from the OpenDota API, cleans, validates and loads it
 Dashboard is created using streamlit and hosted onto streamlit cloud.
 
 End result of such a site is contained within this repository which shows heroes statistics in a table and a cluster diagram.
+### 1. Hero Statistics
 
 <img width="1879" height="840" alt="dashboard-statistics" src="https://github.com/user-attachments/assets/80585d48-166b-4a87-8ada-00ab1a107649" />
-First tab on navigation bar.
 
-<img width="1898" height="819" alt="dashboard-cluster" src="https://github.com/user-attachments/assets/5cfe158c-d16d-41b7-84dd-664ae46fb362" />
-Second tab on navigation bar.
+Hero statistics tab shows the statistics for all heroes in Dota2 based on the current/selected week that can be changed using the drop-down box on the right.
+Statistics provided are such as: Appearance rate, Win rate and Winrate Rankings.
 
-Accommodates different weeks in drop down bar on right.
+### 2. Cluster Diagram
+
+<img width="1898" height="819" alt="dashboard-cluster" src="https://github.com/user-attachments/assets/6c93064c-ddad-4457-9216-36677e3b5b08" />
+
+Cluster diagram tab shows how statistics can be presented with 2 dimensions of information readily available.
+Heroes' statistics are displayed with win/appearance rates presented relative to each other at a single glance. Outliers become evident and can be investigated by hovering over them to reveal more details about them.
 
 ## System Architecture Diagram
-<img width="437" height="494" alt="System Architecure2" src="https://github.com/user-attachments/assets/1da5cfac-f03e-47bd-bf70-c12315008b75" />
+
+<img width="554" height="646" alt="System Architecure4" src="https://github.com/user-attachments/assets/256dd38c-4ad7-431e-a506-46381052fc9a" />
 
 ## Technology Used
 Python/Pandas
@@ -36,40 +42,46 @@ Streamlit
 
 ## Features
 
-### Feature #1: Processed ~3 million match records
-Able to obtain ~3 million match records using Python and Pandas to obtain statistics such as, hero appearance, win rates and performance for analytical reporting. Reformatted data for database storage to take as little space as possible while providing enough data for analysis.
+### Feature #1: Condensed ~3 million match data to 127 entries
+
+<img width="1915" height="916" alt="database_neon" src="https://github.com/user-attachments/assets/11e689b8-3656-4fe1-9f65-41f41380e2cc" />
+
+This project aims to pull ~3 million match data weekly and storing the entire thing is infeasible due to cloud storage constraints.
+Reformatted data for storage, from storing ~3million matches, to 127 (no. of heroes) rows of data per week and is able to accommodate extra features easily without having to significantly increase storage space.
 
 ### Feature #2: Implemented 3 DAGs for common uses
+
 <img width="942" height="503" alt="DAGs" src="https://github.com/user-attachments/assets/a0f217f4-4523-4664-ab53-e22033f2f295" />
+  
+  DAG#1: clear_database (Truncates table and preserves role permissions)
+  
+This DAG is primarily executed manually to truncate my target PostgreSQL table. This DAG runs a truncate on the existing table as to prevent the reset of permissions on my readonly and writeonly roles, while giving me a blank table so insert data into.
 
-1. DAG: clear_database
-
-This DAG is mostly ran manually to clear out my entire PostgreSQL database. This DAG runs a truncate on the existing table as to prevent the reset of permissions on my readonly and writeonly roles, while giving me a blank table so insert data into.
-
+  DAG#2: main (Main way of populating database)
+  
 <img width="580" height="159" alt="DAG_main" src="https://github.com/user-attachments/assets/0979477d-7bae-4f53-b9c0-616190196614" />
-
-2. Dag: main
 
 This DAG directs the main body of code consisting of 3 pythonOperators:
   1. Checks if there is a week's worth of data to process (Project aims to get a weekly round-up type analysis)
   2. Checks database for latest timestamp and changes config file to ready next ETL
   3. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
+  DAG#3: start_4_mon (Initialise/Backfill)
+  
 <img width="582" height="148" alt="DAG_start_4_mon" src="https://github.com/user-attachments/assets/fed2fc38-eb8c-4d18-905e-c4ca3062d819" />
-
-3. DAG: start_4_mon
 
 This DAG should be followed after clear_database, contains 2 pythonOperators:
   1. Gets a list of UNIX timestamps of 4 Sundays back, returns the last Sunday and writes it into the config file.
   2. Runs ETL python code based on set timestamp in config file, cleans and validates, uploads it to PostgreSQL. (Main_task)
 
-### Feature #3: Retries on get request failure
+### Feature #3: Retries on HTTP request failure
+
 <img width="479" height="560" alt="Retry get request" src="https://github.com/user-attachments/assets/6dfd59f6-dd27-45ac-90b4-06ad97df9b11" />
 
-Get requests to the OpenDota API fails on occasion, while get request code stays consistent. 
+HTTP requests to the OpenDota API fail on occasion, while HTTP request code stays consistent. 
 
 I have programmed a recursion function that has 2 main features that reduces its overall impact:
-  1. Recursion function that retries if get request fails (automatically retries with same code as issue is likely API based)
+  1. Recursion function that retries if HTTP request fails (automatically retries with same code as issue is likely API based)
   2. Able to start loading from last collected batch of data ("save point" introduced, able to continue where for loop left off on error)
 
 
